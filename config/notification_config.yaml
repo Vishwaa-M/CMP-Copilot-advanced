@@ -1,0 +1,6 @@
+# config/notification_config.yaml
+
+# A list of email addresses that will receive the final report.
+manager_recipients:
+  - antony@xaasio.com
+  - vishwaa.int@xaasio.com

@@ -1,0 +1,57 @@
+# playbooks/security/openscap_scan.yml
+---
+- hosts: all
+  become: yes # Run commands as root (sudo)
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - bzip2
+          - libopenscap8
+        state: present
+        update_cache: yes
+
+    - name: Get the Ubuntu codename (e.g., focal, jammy)
+      command: lsb_release -cs
+      register: ubuntu_codename
+      changed_when: false
+
+    - name: Download the latest OVAL definitions
+      get_url:
+        url: "https://security-metadata.canonical.com/oval/com.ubuntu.{{ ubuntu_codename.stdout }}.usn.oval.xml.bz2"
+        dest: "/tmp/usn.oval.xml.bz2"
+        force: yes
+
+    - name: Uncompress the OVAL definitions
+      command: bunzip2 -f /tmp/usn.oval.xml.bz2
+      args:
+        creates: /tmp/usn.oval.xml
+
+    - name: Define the remote report path
+      set_fact:
+        remote_report_path: "/tmp/{{ inventory_hostname }}_report.html"
+
+    - name: Run the OVAL vulnerability scan
+      command: "oscap oval eval --report {{ remote_report_path }} /tmp/usn.oval.xml"
+      ignore_errors: yes
+
+    - name: Fetch the generated HTML report to the local 'reports' directory
+      fetch:
+        src: "{{ remote_report_path }}"
+        dest: "reports/" # This saves to a 'reports' folder in the project root
+        flat: yes # This prevents creating a subdirectory for the host
+      register: fetch_result # Register the result of this task
+
+    - name: DEBUG - Show where the file was fetched
+      debug:
+        var: fetch_result
+      when: fetch_result is defined
+
+    - name: Clean up remote files
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "/tmp/usn.oval.xml"
+        - "{{ remote_report_path }}"

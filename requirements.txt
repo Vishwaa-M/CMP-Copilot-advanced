@@ -1,0 +1,25 @@
+# ----- Agent framework -----
+langgraph
+
+# ----- Openstack Client -----
+python-openstackclient
+
+# ----- env -----
+python-dotenv
+
+# ----- ansible -----
+ansible-runner
+
+# ----- llm -----
+mistralai
+tenacity
+
+# ----- email -----
+pyyaml
+
+# ----- html-parsing -----
+beautifulsoup4
+
+# ----- api integration -----
+fastapi
+uvicorn

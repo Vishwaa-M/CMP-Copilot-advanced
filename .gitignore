@@ -1,0 +1,44 @@
+# --- Python Virtual Environments ---
+# Ignore the virtual environment folder itself, by its specific name or common names.
+cmp_copilot_venv/
+venv/
+.venv/
+env/
+.env/
+
+# --- Environment Variables ---
+# Ignore all .env files containing secrets.
+# CRITICAL: This prevents your API keys and passwords from being exposed.
+.env
+.env.*
+# But DO commit the example template so others know what variables are needed.
+!.env.example
+
+# --- Python Cache and Compiled Files ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Distribution / Packaging ---
+build/
+dist/
+*.egg-info/
+wheels/
+
+# --- Log and Database Files ---
+*.log
+*.sqlite3
+*.db
+
+# --- Generated Reports ---
+# Ignore the output directories from our agent's tools.
+reports/
+playbooks/security/reports/
+
+# --- IDE / Editor-specific Configuration ---
+.vscode/
+.idea/
+
+# --- macOS-specific files ---
+.DS_Store
