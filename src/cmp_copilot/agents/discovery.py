@@ -1,4 +1,4 @@
-# src/cmp_copilot/agents/discovery.py
+
 import logging
 import asyncio
 from typing import Dict
@@ -6,19 +6,17 @@ import sys
 import os
 import json
 
-# This allows the script to find the other modules when run directly
 try:
     src_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     sys.path.insert(0, src_path)
     from src.cmp_copilot.agents.state import AgentState
     from src.cmp_copilot.tools.openstack_client import OpenStackClient
 except (ImportError, ModuleNotFoundError):
-    # This is to allow the file to be imported by other modules without path issues
+ 
     from src.cmp_copilot.agents.state import AgentState
     from src.cmp_copilot.tools.openstack_client import OpenStackClient
 
 
-# Configure logging for this module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 async def discovery_node(state: AgentState) -> Dict:
@@ -64,7 +62,7 @@ async def discovery_node(state: AgentState) -> Dict:
             state['messages'].append(("system", result_message))
             return {"target_vms": []}
         
-        # We only want to run scans on ACTIVE VMs.
+    
         active_vms = [vm for vm in vms if vm.get('status') == 'ACTIVE']
         
         if not active_vms:
