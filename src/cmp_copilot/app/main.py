@@ -1,4 +1,3 @@
-# src/cmp_copilot/app/main.py
 
 import logging
 import json
@@ -47,7 +46,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="CMP Copilot Agent",
     description="An agentic AI for cloud management and security scanning.",
-    version="2.5.0", # Final version
+    version="2.5.0",
     lifespan=lifespan
 )
 
@@ -102,7 +101,6 @@ async def chat_endpoint(request: ChatRequest):
     if not user_query:
         return {"error": "No user query provided."}
     
-    # --- FIX: Use a single, persistent thread_id for the chat session ---
     thread_id = "main_persistent_chat_session"
     
     return StreamingResponse(stream_agent_response(user_query, thread_id), media_type="text/event-stream")
