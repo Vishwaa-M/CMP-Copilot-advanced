@@ -1,4 +1,3 @@
-# tools/notification_service.py
 
 import os
 import smtplib
@@ -12,18 +11,14 @@ from dotenv import load_dotenv
 # Configure basic logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Load environment variables from a .env file at the project root.
 load_dotenv()
 
-# This allows the script to find the 'utils' module when run directly
 try:
-    # --- Corrected Path Logic ---
-    # Calculate the path to the 'src' directory and add it to the system path
+   
     src_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     sys.path.insert(0, src_path)
     from cmp_copilot.utils.config_loader import load_yaml_config
 except (ImportError, ModuleNotFoundError):
-    # This will be handled gracefully in the test block if the file is missing.
     pass
 
 
@@ -103,8 +98,7 @@ if __name__ == '__main__':
     logging.info("--- Running Notification Service REAL EMAIL Test ---")
 
     try:
-        # --- Corrected Path Logic ---
-        # 1. Calculate the project root directory (which contains the 'config' folder)
+  
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
         
         # 2. Construct the full path to the config file
