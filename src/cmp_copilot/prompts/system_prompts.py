@@ -1,9 +1,4 @@
-# src/cmp_copilot/prompts/system_prompts.py
 
-# --- Supervisor Agent Prompt ---
-# This prompt instructs the LLM on how to parse the user's query into a structured plan.
-# The {} in the JSON examples have been escaped by doubling them to {{}}
-# to prevent errors with Python's .format() method.
 SUPERVISOR_PROMPT = """
 You are an expert at parsing user requests for a cloud management agent.
 Your task is to analyze the user's query and extract a structured plan in a strict JSON format.
@@ -51,9 +46,6 @@ User Query: "{user_query}"
 """
 
 
-# --- Analysis Agent Prompt ---
-# This prompt instructs the LLM on how to summarize a SINGLE technical HTML report.
-# It is no longer used by the main analysis node but is kept for potential future use.
 ANALYSIS_PROMPT = """
 You are an expert security analyst AI. Your task is to parse the provided raw HTML content
 of an OpenSCAP OVAL scan report and create a concise, structured summary in JSON format.
@@ -70,8 +62,7 @@ Here is the raw HTML content of the report:
 {html_report_content}
 """
 
-# --- CORRECTED PROMPT FOR AGGREGATED ANALYSIS ---
-# This new prompt correctly handles the aggregated JSON data from multiple scans.
+
 AGGREGATE_ANALYSIS_PROMPT = """
 You are an expert security analyst AI. Based on the following JSON data, which lists vulnerabilities found across multiple hosts, create a concise summary.
 
@@ -87,8 +78,6 @@ Here is the JSON data:
 """
 
 
-# --- Email Subject Generation Prompt ---
-# This prompt generates a concise subject line for the notification email.
 EMAIL_SUBJECT_PROMPT = """
 Based on the following summary of a security scan, generate a short, informative email subject line.
 Start the subject with "CMP Copilot Scan Report:".
@@ -97,8 +86,6 @@ Summary: {summary_text}
 """
 
 
-# --- Email Body Generation Prompt ---
-# This prompt formats the final summary into a professional email body.
 EMAIL_BODY_PROMPT = """
 You are an AI assistant responsible for drafting security notifications.
 Based on the provided JSON summary and a special acknowledgment link, write a professional and detailed email body in Markdown format.
@@ -121,8 +108,6 @@ Here is the acknowledgment link: {acknowledgment_link}
 """
 
 
-# --- NEW UI SUMMARY PROMPT ---
-# This new prompt creates a summary specifically for the chat UI.
 UI_SUMMARY_PROMPT = """
 You are an AI assistant summarizing security scan results for a user in a chat interface.
 Based on the provided JSON data, create a concise and clear summary in Markdown that directly answers the user's question about vulnerable systems.
