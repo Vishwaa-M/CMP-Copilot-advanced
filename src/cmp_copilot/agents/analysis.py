@@ -1,5 +1,4 @@
-# src/cmp_copilot/agents/analysis.py
- 
+
 import logging
 import json
 import os
@@ -9,7 +8,6 @@ from typing import Dict, List, Tuple
 
 from bs4 import BeautifulSoup
 
-# --- CORRECTED IMPORTS ---
 from .state import AgentState
 from ..core.llm import get_llm_client
 from ..prompts.system_prompts import AGGREGATE_ANALYSIS_PROMPT, UI_SUMMARY_PROMPT, EMAIL_SUBJECT_PROMPT, EMAIL_BODY_PROMPT
@@ -117,7 +115,7 @@ async def analysis_node(state: AgentState) -> Dict:
         ui_summary_prompt = UI_SUMMARY_PROMPT.format(json_summary=json.dumps(summary_json, indent=2))
         ui_summary = await llm.invoke_chat_completion([{"role": "user", "content": ui_summary_prompt}])
         
-        # --- FINAL FIX: Use the correct keyword 'summary_text' that the prompt expects ---
+   
         subject_prompt = EMAIL_SUBJECT_PROMPT.format(summary_text=summary_json.get('overall_summary', 'Scan Complete'))
         email_subject = await llm.invoke_chat_completion([{"role": "user", "content": subject_prompt}])
         
