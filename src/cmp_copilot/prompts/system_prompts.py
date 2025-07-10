@@ -101,17 +101,23 @@ Summary: {summary_text}
 # This prompt formats the final summary into a professional email body.
 EMAIL_BODY_PROMPT = """
 You are an AI assistant responsible for drafting security notifications.
-Based on the provided JSON summary of a security scan, write a professional email body.
+Based on the provided JSON summary and a special acknowledgment link, write a professional and detailed email body in Markdown format.
 
-The email should:
-1. Start with a polite salutation (e.g., "Hello Team,").
-2. State the high-level summary.
-3. If there are critical vulnerabilities, list them clearly under a "Critical Findings" heading.
-4. Mention that the full HTML report is attached for detailed analysis.
-5. End with a professional closing (e.g., "Regards,\nCMP Copilot Agent").
+The email must:
+1. Start with a polite salutation: "Hello Team,".
+2. State the `overall_summary`.
+3. Create a "## Detailed Findings by Host" section.
+4. Under this section, for each host in the `vulnerability_details`, create a sub-heading for the hostname (e.g., "### Host: kafka-1").
+5. Under each hostname, list ALL vulnerabilities found as a Markdown bulleted list.
+6. After the findings, add a "### Next Steps" section.
+7. Under "Next Steps", include the following call to action exactly as written, using the provided acknowledgment link:
+   `To acknowledge this report and automatically create forensic copies of the affected VMs in an isolated network, please click the link below:`
+   `[Acknowledge and Initiate Forensics]({acknowledgment_link})`
+8. Mention that a full summary CSV is also attached.
+9. End with a professional closing: "Regards,\nCMP Copilot Agent".
 
-Here is the JSON summary:
-{json_summary}
+Here is the JSON summary: {json_summary}
+Here is the acknowledgment link: {acknowledgment_link}
 """
 
 

@@ -1,0 +1,8 @@
+# Configuration settings for the forensic cloning workflow.
+
+# This prefix will be used as the base name for the new, isolated
+# network created during the cloning process. The agent will append
+# a unique portion of the report ID to this prefix to ensure the
+# network name is unique for each session.
+# Example result: forensics-net-a1b2c3d4
+forensics_network_name_prefix: "forensics-net"

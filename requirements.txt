@@ -23,3 +23,7 @@ beautifulsoup4
 # ----- api integration -----
 fastapi
 uvicorn
+
+# ----- Checkpointer -----
+psycopg-binary
+langgraph-checkpoint-postgres
