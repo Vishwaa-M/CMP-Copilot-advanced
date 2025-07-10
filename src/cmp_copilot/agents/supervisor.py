@@ -1,12 +1,9 @@
-# src/cmp_copilot/agents/supervisor.py
 
 import logging
 import json
 import asyncio
 from typing import Dict
 
-# --- CORRECTED IMPORTS ---
-# Use relative imports to correctly locate modules within the same package.
 from .state import AgentState
 from ..core.llm import get_llm_client
 from ..prompts.system_prompts import SUPERVISOR_PROMPT
@@ -27,7 +24,6 @@ async def supervisor_node(state: AgentState) -> Dict:
     """
     logging.info("--- SUPERVISOR NODE ---")
     
-    # Announce the action for the streaming UI
     initial_message = "Parsing user query to create a plan..."
     state['messages'].append(("system", initial_message))
 
