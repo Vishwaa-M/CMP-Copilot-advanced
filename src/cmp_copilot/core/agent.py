@@ -1,4 +1,4 @@
-# src/cmp_copilot/core/agent.py
+
 import os
 import logging
 import asyncio
@@ -6,7 +6,6 @@ import json
 from typing import Dict, List, Tuple
 from langgraph.graph import StateGraph, END
 
-# --- CORRECTED IMPORTS ---
 from ..agents.state import AgentState
 from ..agents.supervisor import supervisor_node
 from ..agents.discovery import discovery_node
@@ -19,10 +18,7 @@ from ..utils.config_loader import load_yaml_config
 # Configure logging for this module
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# --- Agent Nodes ---
-
 async def notification_node(state: AgentState) -> Dict:
-    # This node remains unchanged
     logging.info("--- NOTIFICATION NODE ---")
     messages_to_return: List[Tuple[str, str]] = []
     subject = state.get("draft_email_subject")
@@ -53,7 +49,7 @@ async def notification_node(state: AgentState) -> Dict:
         return {"error_log": [error_msg], "messages": messages_to_return}
 
 async def cloning_node(state: AgentState) -> Dict:
-    # This node remains unchanged
+ 
     logging.info("--- CLONING NODE ---")
     messages_to_return: List[Tuple[str, str]] = []
     vms_to_clone = state.get("vulnerable_vms", [])
@@ -95,7 +91,6 @@ async def cloning_node(state: AgentState) -> Dict:
         messages_to_return.append(("system", error_msg))
         return {"error_log": [error_msg], "messages": messages_to_return}
 
-# --- FIX: New Entry Router Node ---
 async def entry_router_node(state: AgentState) -> Dict:
     """
     This node is the new entry point. It performs the routing logic and
@@ -114,17 +109,17 @@ async def entry_router_node(state: AgentState) -> Dict:
         decision = "supervisor"
         
     logging.info(f"Decision: {decision}")
-    # Return a dictionary to update the 'next_node' field in the state
+ 
     return {"next_node": decision}
 
-# --- FIX: New Conditional Edge Function ---
+
 def route_from_entry(state: AgentState) -> str:
     """
     This simple function reads the decision from the state to direct the graph.
     """
     return state.get("next_node", "supervisor")
 
-# --- Original Routing Functions (unchanged) ---
+
 def route_after_plan(state: AgentState) -> str:
     action = state.get("plan", {}).get("action")
     return "discover" if action in ["security_scan", "list_vms"] else "end"
