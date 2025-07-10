@@ -1,4 +1,3 @@
-# tools/ansible_executor.py
 
 import os
 import ansible_runner
@@ -45,16 +44,13 @@ def run_playbook(playbook_path: str, target_host: str, ssh_user: str, ssh_pass: 
                 private_data_dir=temp_dir,
                 playbook=playbook_path,
                 inventory=inventory_path,
-                # No longer need project_dir, as fetch is relative to the playbook
                 quiet=False
             )
 
             if r.status == 'successful':
                 logging.info(f"Playbook run completed successfully.")
                 
-                # --- FINAL CORRECTED FILE CHECK ---
-                # The playbook saves the report to a 'reports' directory
-                # located in the same directory as the playbook itself.
+       
                 playbook_dir = os.path.dirname(playbook_path)
                 expected_report_filename = f"{target_host}_report.html"
                 local_report_path = os.path.join(playbook_dir, 'reports', expected_report_filename)
